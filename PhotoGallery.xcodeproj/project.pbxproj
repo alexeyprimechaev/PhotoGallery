@@ -7,13 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		809B11292A44EFFB007F8A89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809B11282A44EFFB007F8A89 /* Assets.xcassets */; };
+		809B112C2A44EFFB007F8A89 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809B112B2A44EFFB007F8A89 /* Preview Assets.xcassets */; };
+		809B112F2A44EFFB007F8A89 /* PhotoGalleryWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 809B11222A44EFFA007F8A89 /* PhotoGalleryWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		80FD11222A44D6BA0071B074 /* PhotoGalleryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD11212A44D6BA0071B074 /* PhotoGalleryApp.swift */; };
 		80FD11242A44D6BA0071B074 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD11232A44D6BA0071B074 /* ContentView.swift */; };
 		80FD11262A44D6BC0071B074 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80FD11252A44D6BC0071B074 /* Assets.xcassets */; };
 		80FD11292A44D6BC0071B074 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80FD11282A44D6BC0071B074 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		809B112D2A44EFFB007F8A89 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 80FD11162A44D6BA0071B074 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 809B11212A44EFFA007F8A89;
+			remoteInfo = "PhotoGalleryWatch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		809B11302A44EFFB007F8A89 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				809B112F2A44EFFB007F8A89 /* PhotoGalleryWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		809B11222A44EFFA007F8A89 /* PhotoGalleryWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PhotoGalleryWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		809B11282A44EFFB007F8A89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		809B112B2A44EFFB007F8A89 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		80FD111E2A44D6BA0071B074 /* PhotoGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80FD11212A44D6BA0071B074 /* PhotoGalleryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGalleryApp.swift; sourceTree = "<group>"; };
 		80FD11232A44D6BA0071B074 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -22,6 +52,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		809B111F2A44EFFA007F8A89 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		80FD111B2A44D6BA0071B074 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -32,10 +69,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		809B11232A44EFFA007F8A89 /* PhotoGalleryWatch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				809B11282A44EFFB007F8A89 /* Assets.xcassets */,
+				809B112A2A44EFFB007F8A89 /* Preview Content */,
+			);
+			path = "PhotoGalleryWatch Watch App";
+			sourceTree = "<group>";
+		};
+		809B112A2A44EFFB007F8A89 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				809B112B2A44EFFB007F8A89 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		80FD11152A44D6BA0071B074 = {
 			isa = PBXGroup;
 			children = (
 				80FD11202A44D6BA0071B074 /* PhotoGallery */,
+				809B11232A44EFFA007F8A89 /* PhotoGalleryWatch Watch App */,
 				80FD111F2A44D6BA0071B074 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				80FD111E2A44D6BA0071B074 /* PhotoGallery.app */,
+				809B11222A44EFFA007F8A89 /* PhotoGalleryWatch Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +126,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		809B11212A44EFFA007F8A89 /* PhotoGalleryWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 809B11332A44EFFB007F8A89 /* Build configuration list for PBXNativeTarget "PhotoGalleryWatch Watch App" */;
+			buildPhases = (
+				809B111E2A44EFFA007F8A89 /* Sources */,
+				809B111F2A44EFFA007F8A89 /* Frameworks */,
+				809B11202A44EFFA007F8A89 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PhotoGalleryWatch Watch App";
+			productName = "PhotoGalleryWatch Watch App";
+			productReference = 809B11222A44EFFA007F8A89 /* PhotoGalleryWatch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
 		80FD111D2A44D6BA0071B074 /* PhotoGallery */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80FD112C2A44D6BC0071B074 /* Build configuration list for PBXNativeTarget "PhotoGallery" */;
@@ -77,10 +150,12 @@
 				80FD111A2A44D6BA0071B074 /* Sources */,
 				80FD111B2A44D6BA0071B074 /* Frameworks */,
 				80FD111C2A44D6BA0071B074 /* Resources */,
+				809B11302A44EFFB007F8A89 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				809B112E2A44EFFB007F8A89 /* PBXTargetDependency */,
 			);
 			name = PhotoGallery;
 			productName = PhotoGallery;
@@ -97,6 +172,9 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					809B11212A44EFFA007F8A89 = {
+						CreatedOnToolsVersion = 15.0;
+					};
 					80FD111D2A44D6BA0071B074 = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -116,11 +194,21 @@
 			projectRoot = "";
 			targets = (
 				80FD111D2A44D6BA0071B074 /* PhotoGallery */,
+				809B11212A44EFFA007F8A89 /* PhotoGalleryWatch Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		809B11202A44EFFA007F8A89 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				809B112C2A44EFFB007F8A89 /* Preview Assets.xcassets in Resources */,
+				809B11292A44EFFB007F8A89 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		80FD111C2A44D6BA0071B074 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -133,6 +221,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		809B111E2A44EFFA007F8A89 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		80FD111A2A44D6BA0071B074 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -144,7 +239,75 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		809B112E2A44EFFB007F8A89 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 809B11212A44EFFA007F8A89 /* PhotoGalleryWatch Watch App */;
+			targetProxy = 809B112D2A44EFFB007F8A89 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		809B11312A44EFFB007F8A89 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PhotoGalleryWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = W7F94ZP22K;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PhotoGalleryWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.lekskeks.PhotoGallery;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lekskeks.PhotoGallery.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		809B11322A44EFFB007F8A89 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PhotoGalleryWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = W7F94ZP22K;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PhotoGalleryWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.lekskeks.PhotoGallery;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lekskeks.PhotoGallery.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 		80FD112A2A44D6BC0071B074 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -287,6 +450,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lekskeks.PhotoGallery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -316,6 +483,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lekskeks.PhotoGallery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -325,6 +496,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		809B11332A44EFFB007F8A89 /* Build configuration list for PBXNativeTarget "PhotoGalleryWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				809B11312A44EFFB007F8A89 /* Debug */,
+				809B11322A44EFFB007F8A89 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		80FD11192A44D6BA0071B074 /* Build configuration list for PBXProject "PhotoGallery" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
