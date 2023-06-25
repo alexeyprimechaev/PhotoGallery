@@ -29,9 +29,9 @@ struct ContentView: View {
     
     var body: some View {
        
-        NavigationStack {
+ 
             StackView()
-        }
+        
     }
     
 }
@@ -119,6 +119,7 @@ struct StackView: View {
         .scrollTargetBehavior(.paging)
             .scrollIndicators(.hidden)
             .padding(20)
+            
         
         
     }
@@ -158,7 +159,7 @@ struct StackView: View {
     func rotation(_ proxy: GeometryProxy, index: Int) -> Angle {
         
         let progress = minX(proxy) / proxy.size.width
-        print(minX(proxy), "min", proxy.size.width)
+        print(minX(proxy), "min")
         if index == 0 {
             
             scrollState.progress = progress
@@ -246,8 +247,7 @@ struct StackView: View {
     }
     
     func offset(_ proxy: GeometryProxy, index: Int) -> CGFloat {
-        
-        
+                
         let maxOffset = proxy.size.width/1.5
         
         let progress = max(min(scrollState.progress - Double(index), 1), -1)
