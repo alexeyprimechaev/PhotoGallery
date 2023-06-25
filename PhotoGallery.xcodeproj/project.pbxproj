@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		809B11292A44EFFB007F8A89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809B11282A44EFFB007F8A89 /* Assets.xcassets */; };
 		809B112C2A44EFFB007F8A89 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809B112B2A44EFFB007F8A89 /* Preview Assets.xcassets */; };
-		809B112F2A44EFFB007F8A89 /* PhotoGalleryWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 809B11222A44EFFA007F8A89 /* PhotoGalleryWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		809B112F2A44EFFB007F8A89 /* PhotoGalleryWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 809B11222A44EFFA007F8A89 /* PhotoGalleryWatch Watch App.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		80FD11222A44D6BA0071B074 /* PhotoGalleryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD11212A44D6BA0071B074 /* PhotoGalleryApp.swift */; };
 		80FD11242A44D6BA0071B074 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD11232A44D6BA0071B074 /* ContentView.swift */; };
 		80FD11262A44D6BC0071B074 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80FD11252A44D6BC0071B074 /* Assets.xcassets */; };
@@ -242,6 +242,7 @@
 /* Begin PBXTargetDependency section */
 		809B112E2A44EFFB007F8A89 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 809B11212A44EFFA007F8A89 /* PhotoGalleryWatch Watch App */;
 			targetProxy = 809B112D2A44EFFB007F8A89 /* PBXContainerItemProxy */;
 		};
