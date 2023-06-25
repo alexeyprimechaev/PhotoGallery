@@ -19,19 +19,23 @@ struct ContentView: View {
     let colors: [Color] = [.red, .blue, .green, .yellow, .pink, .purple, .cyan, .indigo, .brown, .orange]
     
     var scrollState: ScrollState = ScrollState()
+    
+    @State var actualWidth: CGFloat = 0
 
     
     var body: some View {
         ScrollView(.horizontal) {
                 HStack(spacing: 0) {
                     ForEach(colors.indices, id: \.self) { index in
-                        RoundedRectangle(cornerRadius: 32)
-                            .fill(colors[index].gradient)
-                            .aspectRatio(1, contentMode: .fit)
+                        
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(colors[index])
+                            .aspectRatio(3/4, contentMode: .fit)
+                        
                             .contextMenu {
                                 Text("Meow")
                             }
-                            .padding(40)
+                            .padding(.horizontal, 60)
                             .containerRelativeFrame([.horizontal, .vertical])
                             .zIndex(zIndex(index: index))
                             .visualEffect { view, proxy in
@@ -40,6 +44,7 @@ struct ContentView: View {
                                     .rotationEffect(rotation(proxy, index: index))
                                     .scaleEffect(scale(proxy, index: index))
                                     .offset(x: offset(proxy, index: index))
+                                    .rotation3D(swipeRotation(proxy, index: index), axis: (x: 0, y: 1, z: 0))
                                     
                             }
                             .scrollTargetLayout()
@@ -55,7 +60,7 @@ struct ContentView: View {
         .scrollClipDisabled(true)
         .scrollTargetBehavior(.paging)
             .scrollIndicators(.hidden)
-        
+            .padding(20)
         
         
     }
@@ -71,7 +76,6 @@ struct ContentView: View {
             return .infinity
         } else {
             if index == currentIndex + 1 {
-                print(scrollState.progress - Double(currentIndex))
                 if scrollState.progress - Double(currentIndex) > 0 {
                     return 1000
                 } else {
@@ -101,14 +105,13 @@ struct ContentView: View {
             
             scrollState.progress = progress
         }
-        
-        let maxAngle: CGFloat = max(min(-(scrollState.progress - CGFloat(index))*4, 4), -4)
-        
+        let maxAngle: CGFloat = max(min(-(scrollState.progress - CGFloat(index))*3, 120), -120)
+        print(index, maxAngle)
         return Angle(degrees: maxAngle)
     }
     
     func scale(_ proxy: GeometryProxy, index: Int) -> CGFloat {
-        let scale: CGFloat = 1 - abs((abs(scrollState.progress) - CGFloat(index))*0.06)
+        let scale: CGFloat = 1 - abs((abs(scrollState.progress) - CGFloat(index))*0.065)
         
         return abs(scale)
         //return min(max(scale, 0.8), 1)
@@ -134,25 +137,63 @@ struct ContentView: View {
         return maxOffset
     }
     
+    func swipeRotation(_ proxy: GeometryProxy, index: Int) -> Angle {
+        
+        let currentIndex: Int = Int(scrollState.progress.rounded(.toNearestOrEven))
+        
+        let maxRotation: CGFloat = 35
+        
+        var currentOffset: CGFloat {
+            if index == currentIndex {
+                return maxRotation*progress(proxy)
+            } else {
+                return 0
+            }
+        }
+        
+        var nextOffset: CGFloat {
+            if index == currentIndex + 1 {
+                if progress(proxy) < -0.5 {
+                    return -maxRotation*(1 + progress(proxy))
+                } else {
+                    return -maxRotation*(1 + progress(proxy))
+                }
+            } else {
+                return 0
+            }
+        }
+        
+        var previousOffset: CGFloat {
+            
+            if index == currentIndex - 1 {
+                if progress(proxy) > 0.5 {
+                    return maxRotation*(1 - progress(proxy))
+                } else {
+                    return maxRotation*(1 - progress(proxy))
+                }
+            } else {
+                return 0
+            }
+        }
+        
+        
+        
+        return Angle(degrees: currentOffset + nextOffset + previousOffset)
+    }
+    
     func offset(_ proxy: GeometryProxy, index: Int) -> CGFloat {
         
         let currentIndex: Int = Int(scrollState.progress.rounded(.toNearestOrEven))
         
-        let maxOffset = proxy.size.width/3
-        
-        
-//        var realOffset: CGFloat {
-//            if index < currentIndex + 2 && index > currentIndex - 2 {
-//                return (Double(index)-scrollState.progress) * maxOffset
-//            } else {
-//                return 0
-//            }
-//        }
-       
+        let maxOffset = proxy.size.width/2
         
         var currentOffset: CGFloat {
             if index == currentIndex {
-                return -maxOffset*progress(proxy)
+                if progress(proxy) < 0.5 {
+                    return -maxOffset*progress(proxy)
+                } else {
+                    return -maxOffset*progress(proxy)
+                }
             } else {
                 return 0
             }
@@ -186,6 +227,40 @@ struct ContentView: View {
         
         
         return minX(proxy) + currentOffset + nextOffset + previousOffset
+    }
+    
+    func additionalScale(_ proxy: GeometryProxy, index: Int) -> CGFloat {
+        
+        let currentIndex: Int = Int(scrollState.progress.rounded(.toNearestOrEven))
+        
+        let maxScale = 0.2
+        
+        var currentOffset: CGFloat {
+            if index == currentIndex {
+                return abs(maxScale*progress(proxy))
+            } else {
+                return 0
+            }
+        }
+        
+        var nextOffset: CGFloat {
+            if index == currentIndex + 1 {
+                return abs(maxScale*(1+progress(proxy)))
+            } else {
+                return 0
+            }
+        }
+        
+        var previousOffset: CGFloat {
+            
+            if index == currentIndex - 1 {
+                return abs(maxScale*(1-progress(proxy)))
+            } else {
+                return 0
+            }
+        }
+        
+        return 1 - (currentOffset + nextOffset + previousOffset)
     }
     func minX(_ proxy: GeometryProxy) -> CGFloat {
         return proxy.bounds(of: .scrollView)?.minX ?? 0
