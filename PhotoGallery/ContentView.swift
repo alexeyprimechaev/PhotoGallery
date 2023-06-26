@@ -29,8 +29,33 @@ struct ContentView: View {
     
     var body: some View {
        
- 
-            StackView()
+        NavigationView {
+            
+            ScrollView {
+                VStack {
+                    HStack {
+                        Spacer()
+                        StackView()
+                            
+                        
+                    }.frame(height: 256)
+                    HStack {
+                        
+                        StackView()
+                        Spacer()
+                    }.frame(height: 256)
+                    HStack {
+                        Spacer()
+                        StackView()
+                    }.frame(height: 256)
+                    HStack {
+                        StackView()
+                        Spacer()
+                    }.frame(height: 256)
+                }
+            }.navigationTitle("Heheks")
+            
+        }
         
     }
     
@@ -66,60 +91,64 @@ struct StackView: View {
     @State var actualWidth: CGFloat = 0
 
     @State var scrolledIndex: Int? = 0
+    
+    @State var totalWidth: CGFloat = 300
+    
     var body: some View {
-        ScrollView(.horizontal) {
+            ScrollView(.horizontal) {
                 HStack(spacing: 0) {
                     ForEach(colors.indices, id: \.self) { index in
                         
-                        RoundedRectangle(cornerRadius: 20)
+                        RoundedRectangle(cornerRadius: actualWidth*0.1)
                             .fill(colors[index])
                             .aspectRatio(3/4, contentMode: .fit)
-
-                            .contextMenu {
-                                Text("Meow")
-                            }
-                            .onTapGesture {
-                                if scrolledIndex != nil {
-                                    if index > Int(scrollState.progress.rounded(.toNearestOrEven)) {
-                                        withAnimation {
-                                            scrolledIndex! += 1
+                            .background {
+                                if index == 0 {
+                                    GeometryReader { geo in
+                                        Color.clear.onAppear {
+                                            print(geo.size.width, "GEO")
+                                            actualWidth = geo.size.width
                                         }
-                                    } else {
-                                        withAnimation {
-                                            scrolledIndex! -= 1
+                                        .onChange(of: geo.size.width) {
+                                            print(geo.size.width, "GEO")
+                                            actualWidth = geo.size.width
                                         }
                                     }
                                 }
                             }
-                            .padding(.horizontal, 60)
-                            .containerRelativeFrame([.horizontal, .vertical])
+                            .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
+                            .contextMenu {
+                                Text("Meow")
+                            }
+                        
+                            //.containerRelativeFrame(.horizontal, count: 5, span: 4, spacing: 0)
+                            .containerRelativeFrame(.horizontal)
                             .zIndex(zIndex(index: index))
                             .visualEffect { view, proxy in
                                 view
                                     .offset(x: regularOffset(proxy, index: index))
                                     .rotationEffect(rotation(proxy, index: index))
                                     .scaleEffect(scale(proxy, index: index))
-                                    //.scaleEffect(additionalScale(proxy, index: index))
+                                //.scaleEffect(additionalScale(proxy, index: index))
                                     .offset(x: offset(proxy, index: index))
                                     .rotation3D(swipeRotation(proxy, index: index), axis: (x: 0, y: 1, z: 0))
-                                    
+                                
                             }
                             .scrollTargetLayout()
-                            
+                        
                     }
+                    
+                }
+                
+                
+                
                 
             }
-            
-                
-            
-            
-        }
-        .scrollPosition(id: $scrolledIndex)
-        .scrollClipDisabled(true)
-        .scrollTargetBehavior(.paging)
+            .scrollPosition(id: $scrolledIndex)
+            .scrollClipDisabled(true)
+            .scrollTargetBehavior(.paging)
             .scrollIndicators(.hidden)
-            .padding(20)
-            
+            .aspectRatio(1, contentMode: .fit)
         
         
     }
@@ -159,7 +188,6 @@ struct StackView: View {
     func rotation(_ proxy: GeometryProxy, index: Int) -> Angle {
         
         let progress = minX(proxy) / proxy.size.width
-        print(minX(proxy), "min")
         if index == 0 {
             
             scrollState.progress = progress
@@ -169,16 +197,13 @@ struct StackView: View {
     }
     
     func scale(_ proxy: GeometryProxy, index: Int) -> CGFloat {
-        let scale: CGFloat = 1 - abs((abs(scrollState.progress) - CGFloat(index))*0.065)
+        let scale: CGFloat = 1 - abs((abs(scrollState.progress) - CGFloat(index))*0.08)
         
         return abs(scale)
         //return min(max(scale, 0.8), 1)
     }
     
-    func brightness(_ proxy: GeometryProxy) -> CGFloat {
-        let progress = progress(proxy) * (-0.2)
-        return min(max(progress, -0.2), 0)
-    }
+    
     func progress(_ proxy: GeometryProxy) -> CGFloat {
         let progress = minX(proxy) / proxy.size.width
         
@@ -189,7 +214,7 @@ struct StackView: View {
     
     func regularOffset(_ proxy: GeometryProxy, index: Int) -> CGFloat {
         
-        let maxOffset: CGFloat = -(scrollState.progress - CGFloat(index))*20
+        let maxOffset: CGFloat = -(scrollState.progress - CGFloat(index))*actualWidth*0.065
         
         
         return maxOffset
@@ -205,7 +230,7 @@ struct StackView: View {
         var currentOffset: CGFloat {
             if index == scrollState.currentIndex {
                
-                if progress < 0 {
+                if progress <= 0 {
                     return maxRotation*progress * 0.5
                 } else {
                     return maxRotation*progress
@@ -218,7 +243,7 @@ struct StackView: View {
         var nextOffset: CGFloat {
             if index == scrollState.currentIndex + 1 {
                 
-                if progress < -0.5 {
+                if progress <= -0.5 {
                     return -maxRotation*(1 + progress) * 0.5
                 } else {
                     return -maxRotation*(1 + progress)
@@ -242,13 +267,13 @@ struct StackView: View {
         }
         
         
-        
+        print(currentOffset + nextOffset + previousOffset)
         return Angle(degrees: currentOffset + nextOffset + previousOffset)
     }
     
     func offset(_ proxy: GeometryProxy, index: Int) -> CGFloat {
                 
-        let maxOffset = proxy.size.width/1.5
+        let maxOffset = actualWidth
         
         let progress = max(min(scrollState.progress - Double(index), 1), -1)
         
@@ -300,9 +325,7 @@ struct StackView: View {
         
         let maxScale = 0.15
         
-        if index == 0 {
-            print(progress(proxy))
-        }
+        
         
         var currentOffset: CGFloat {
             if index == scrollState.currentIndex {
