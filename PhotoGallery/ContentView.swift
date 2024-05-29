@@ -29,64 +29,26 @@ struct ContentView: View {
     
     var body: some View {
        
-        NavigationView {
             
-            ScrollView {
-                VStack {
-                    HStack {
-                        Spacer()
-                        StackView()
+               
+
+        StackView(images: ["IMG_5242", "IMG_5727", "IMG_7116", "IMG_7172", "IMG_7178", "IMG_7359", "IMG_7404"])
+            .padding(40)
                             
-                        
-                    }.frame(height: 256)
-                    HStack {
-                        
-                        StackView()
-                        Spacer()
-                    }.frame(height: 256)
-                    HStack {
-                        Spacer()
-                        StackView()
-                    }.frame(height: 256)
-                    HStack {
-                        StackView()
-                        Spacer()
-                    }.frame(height: 256)
-                }
-            }.navigationTitle("Heheks")
+              
             
-        }
+        
         
     }
     
 }
 
 
-
-struct GridView: View {
-    
-    let colors: [Color] = [.red, .blue, .green, .yellow, .pink, .purple, .cyan, .indigo, .brown, .orange]
-    let columns = [
-            GridItem(.adaptive(minimum: 80))
-        ]
-    
-    var namespace: Namespace.ID
-    var body: some View {
-        LazyVGrid(columns: columns) {
-            ForEach(colors.indices, id: \.self) { index in
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(colors[index])
-                    .matchedGeometryEffect(id: index, in: namespace)
-                
-            }
-        }
-    }
-}
 struct StackView: View {
     
-    let colors: [Color] = [.red, .blue, .green, .yellow, .pink, .purple, .cyan, .indigo, .brown, .orange]
     
-    var scrollState: ScrollState = ScrollState()
+        
+    private var scrollState: ScrollState = ScrollState()
     
     @State var actualWidth: CGFloat = 0
 
@@ -94,16 +56,41 @@ struct StackView: View {
     
     @State var totalWidth: CGFloat = 300
     
+    struct ImageWrapper: Identifiable, Transferable, Codable, Hashable {
+        
+        var id: Int
+        var image: String
+        
+        static var transferRepresentation: some TransferRepresentation {
+            CodableRepresentation(contentType: .text)
+        }
+    }
+    
+    private var images: [ImageWrapper]
+    
+    init(images: [String]) {
+        
+        var _images: [ImageWrapper] = []
+        
+        for index in images.indices {
+            _images.append(ImageWrapper(id: index, image: images[index]))
+        }
+        self.images = _images
+    }
+    
+    
     var body: some View {
             ScrollView(.horizontal) {
                 HStack(spacing: 0) {
-                    ForEach(colors.indices, id: \.self) { index in
+                    ForEach(images) { wrapper in
                         
-                        RoundedRectangle(cornerRadius: actualWidth*0.1)
-                            .fill(colors[index])
+                        Image(wrapper.image)
+                            .resizable()
                             .aspectRatio(3/4, contentMode: .fit)
+                            .clipShape(RoundedRectangle(cornerRadius: actualWidth*0.1))
+                            .drawingGroup()
                             .background {
-                                if index == 0 {
+                                if wrapper.id == 0 {
                                     GeometryReader { geo in
                                         Color.clear.onAppear {
                                             print(geo.size.width, "GEO")
@@ -116,25 +103,23 @@ struct StackView: View {
                                     }
                                 }
                             }
-                            .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 20))
-                            .contextMenu {
-                                Text("Meow")
-                            }
-                        
-                            //.containerRelativeFrame(.horizontal, count: 5, span: 4, spacing: 0)
-                            .containerRelativeFrame(.horizontal)
-                            .zIndex(zIndex(index: index))
+                                
+                            .containerRelativeFrame([.horizontal], count: 7, span: 6, spacing: 0)
+                            .containerRelativeFrame([.horizontal])
+                            .zIndex(zIndex(index: wrapper.id))
                             .visualEffect { view, proxy in
                                 view
-                                    .offset(x: regularOffset(proxy, index: index))
-                                    .rotationEffect(rotation(proxy, index: index))
-                                    .scaleEffect(scale(proxy, index: index))
+                                    .offset(x: regularOffset(proxy, index: wrapper.id))
+                                    .rotationEffect(rotation(proxy, index: wrapper.id))
+                                    .scaleEffect(scale(proxy, index: wrapper.id))
                                 //.scaleEffect(additionalScale(proxy, index: index))
-                                    .offset(x: offset(proxy, index: index))
-                                    .rotation3D(swipeRotation(proxy, index: index), axis: (x: 0, y: 1, z: 0))
+                                    .offset(x: offset(proxy, index: wrapper.id))
+                                    .rotation3DEffect(swipeRotation(proxy, index: wrapper.id), axis: (x: 0, y: 1, z: 0))
                                 
                             }
                             .scrollTargetLayout()
+                            
+                            
                         
                     }
                     
@@ -256,7 +241,7 @@ struct StackView: View {
         var previousOffset: CGFloat {
             
             if index == scrollState.currentIndex - 1 {
-                if progress > 0.5 {
+                if progress >= 0.5 {
                     return maxRotation*(1 - progress)
                 } else {
                     return maxRotation*(1 - progress)
@@ -267,7 +252,6 @@ struct StackView: View {
         }
         
         
-        print(currentOffset + nextOffset + previousOffset)
         return Angle(degrees: currentOffset + nextOffset + previousOffset)
     }
     
